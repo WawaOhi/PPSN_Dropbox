@@ -1,35 +1,17 @@
-package com.example.ppsn.ui.login;
-
-import android.app.Activity;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+package com.example.ppsn;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.dropbox.core.android.Auth;
-import com.example.ppsn.MainActivity;
-import com.example.ppsn.R;
-import com.example.ppsn.ui.login.LoginViewModel;
-import com.example.ppsn.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
     @Override
@@ -38,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Button SignInButton = (Button) findViewById(R.id.sign_in_button);
-        SignInButton.setOnClickListener(new View.OnClickListener() {
+        SignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Auth.startOAuth2Authentication(getApplicationContext(), getString(R.string.APP_KEY));
@@ -56,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         String accessToken = Auth.getOAuth2Token(); //generate Access Token
         if (accessToken != null) {
             //Store accessToken in SharedPreferences
-            SharedPreferences prefs = getSharedPreferences("com.example.valdio.dropboxintegration", Context.MODE_PRIVATE);
+            SharedPreferences prefs = getSharedPreferences("com.example.ppsn", Context.MODE_PRIVATE);
             prefs.edit().putString("access-token", accessToken).apply();
 
             //Proceed to MainActivity

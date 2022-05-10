@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.dropbox.core.v2.users.FullAccount;
-import com.example.ppsn.ui.login.LoginActivity;
+import com.example.ppsn.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,8 +28,6 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMain2Binding binding;
     private static final int IMAGE_REQUEST_CODE = 101;
     private String ACCESS_TOKEN;
 
@@ -66,30 +64,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAccountReceived(FullAccount account) {
                 //Print account's info
-                Log.d("User", account.getEmail());
-                Log.d("User", account.getName().getDisplayName());
-                Log.d("User", account.getAccountType().name());
+                Log.d("User data", account.getEmail());
+                Log.d("User data ", account.getName().getDisplayName());
+                Log.d("User data", account.getAccountType().name());
                 updateUI(account);
             }
             @Override
             public void onError(Exception error) {
-                Log.d("User", "Error receiving account details.");
+                Log.d("User data", "Error receiving account details.");
             }
         }).execute();
-    }
-
-    //Used for the display of the information needed
-    private void updateUI(FullAccount account) {
-        ImageView profile = (ImageView) findViewById(R.id.imageView);
-        TextView name = (TextView) findViewById(R.id.name_textView);
-        TextView email = (TextView) findViewById(R.id.email_textView);
-
-        name.setText(account.getName().getDisplayName());
-        email.setText(account.getEmail());
-        Picasso.with(this)
-                .load(account.getProfilePhotoUrl())
-                .resize(200, 200)
-                .into(profile);
     }
 
     //Here it is not that important but it is generally used for uploading images
@@ -141,4 +125,19 @@ public class MainActivity extends AppCompatActivity {
             return accessToken;
         }
     }
+
+    //Used for the display of the information needed
+    private void updateUI(FullAccount account) {
+        ImageView profile = (ImageView) findViewById(R.id.imageView);
+        TextView name = (TextView) findViewById(R.id.name_textView);
+        TextView email = (TextView) findViewById(R.id.email_textView);
+
+        name.setText(account.getName().getDisplayName());
+        email.setText(account.getEmail());
+        Picasso.with(this)
+                .load(account.getProfilePhotoUrl())
+                .resize(200, 200)
+                .into(profile);
+    }
+
 }
